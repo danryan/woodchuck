@@ -32,6 +32,7 @@ module Woodchuck::Runner
   end
   
   def run(options={})
+    puts options.inspect
     agent = Woodchuck::Agent.new(options)
     agent.start(true)
     Signal.trap('INT') do

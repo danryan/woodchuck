@@ -7,7 +7,7 @@ class Woodchuck::Output::Redis < Woodchuck::Output
   def initialize
     super
     @type = :redis
-    @url = Addressable::URI.parse(ENV['REDIS_URL'])
+    @url = Addressable::URI.parse(ENV['REDIS_URL'] || 'redis://localhost:6379/9')
     @namespace = ENV['REDIS_NAMESPACE'] || 'logstash:woodchuck'
   end
   
@@ -17,7 +17,7 @@ class Woodchuck::Output::Redis < Woodchuck::Output
   end
   
   def handle(event)
-    redis.lpush(namespace, event.to_json)
-    @logger.debug "Logging event to Redis", event.to_hash
+    redis.lpush("events", event.to_json)
+    @logger.info "Logging event to Redis", event.to_hash
   end
 end

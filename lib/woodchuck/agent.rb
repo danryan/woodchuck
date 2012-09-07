@@ -18,7 +18,7 @@ class Woodchuck::Agent
                  when :zeromq
                    Woodchuck::Output::ZeroMQ.new
                  when :redis
-                  Woodchuck::Output::ZeroMQ.new
+                   Woodchuck::Output::Redis.new
                  else
                    Woodchuck::Output::STDOUT.new
                  end

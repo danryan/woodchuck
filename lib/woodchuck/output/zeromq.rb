@@ -1,6 +1,6 @@
 require 'woodchuck/output'
 
-class Woodchuck::Output::STDOUT < Woodchuck::Output
+class Woodchuck::Output::ZeroMQ < Woodchuck::Output
   def initialize
     super
     @type = :zeromq

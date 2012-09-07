@@ -25,6 +25,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'addressable', '~> 2.3.2'
   gem.add_dependency 'redis', '~> 3.0.1'
   gem.add_dependency 'redis-namespace', '~> 1.2.1'
+  gem.add_dependency 'fallen', '~> 0.0.1'
   
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'rspec', '~> 2.11.0'

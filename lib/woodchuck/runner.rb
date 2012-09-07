@@ -1,4 +1,8 @@
+require 'fallen'
+
 module Woodchuck::Runner
+  extend Fallen
+  # extend Fallen::CLI
   extend self
   
   def logger
@@ -28,15 +32,12 @@ module Woodchuck::Runner
   end
   
   def run(options={})
-    puts options.inspect
     agent = Woodchuck::Agent.new(options)
-    agent.start
-    [ "INT", "TERM"].each do |signal|
-      Signal.trap(signal) do
-        logger.warn :signal => signal
-        agent.stop
-      end
-    end
-    
+    agent.start(true)
+    Signal.trap('INT') do
+      @logger.warn :signal => signal
+      agent.stop
+      exit 0
+    end    
   end
 end

@@ -2,7 +2,7 @@ require 'woodchuck/logger'
 
 class Woodchuck::Event
   
-  attr_accessor :path, :line, :host, :timestamp, :source
+  attr_accessor :path, :line, :host, :timestamp, :source, :message, :fields, :tags
   
   def initialize(path, line)
     @path = path
@@ -10,18 +10,29 @@ class Woodchuck::Event
     @host = Socket.gethostname
     @timestamp = Time.now.utc.iso8601(6)
     @source = Addressable::URI.new(:scheme => 'file', :host => host, :path => path)
+    @message = line.strip
+    @fields = {}
+    @tags = []
+  end
+  
+  def method_missing(symbol, *args, &block)
+    if to_hash.has_key?(symbol)
+      to_hash
+    else
+      super(symbol, *args, &block)
+    end
   end
   
   def to_hash
     {
       '@source' => source.to_s,
       '@type' => source.scheme,
-      '@tags' => [],
-      '@fields' => {},
+      '@tags' => tags,
+      '@fields' => fields,
       '@timestamp' => timestamp,
       '@source_host' => host,
       '@source_path' => path,
-      '@message' => line.strip
+      '@message' => message
     }
   end
   

@@ -24,7 +24,8 @@ class Woodchuck::Watcher
       tailer.tail(path)
     end
     tailer.subscribe do |path, line|
-      @events << Woodchuck::Event.new(path, line)
+      event = Woodchuck::Event.new(path, line)
+      output.handle(event)
     end
   end
   

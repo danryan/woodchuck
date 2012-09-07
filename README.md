@@ -2,7 +2,7 @@
 
 A lightweight log shipper for logstash written in Ruby.
 
-Fair warning, it's a work in progress ;)
+Inspired by [beaver](https://github.com/josegonzalez/beaver) and [logstash](https://github.com/logstash/logstash) itself. Fair warning, it's a work in progress ;)
 
 ## Installation
 
@@ -13,11 +13,6 @@ Install as a gem:
 And then execute:
 
     $ woodchuck
-## Configuration
-
-```ruby
-watch "/var/log/postgresql/*"
-```
 
 ## Usage
 ```bash

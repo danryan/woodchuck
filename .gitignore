@@ -16,3 +16,4 @@ spec/fixtures
 test/tmp
 test/version_tmp
 tmp
+.rbenv*

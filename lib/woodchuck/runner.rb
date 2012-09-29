@@ -26,6 +26,9 @@ module Woodchuck::Runner
       opts.on('-p', '--paths [PATHS]', Array, 'A list of file paths to watch') do |paths|
         options[:paths] = paths
       end
+      opts.on('-t', '--type [TYPE]', 'set logstash type') do |type|
+        options[:type] = type
+      end
     end
     optparse.parse!(args)
     options

@@ -6,12 +6,13 @@ require 'woodchuck/output'
 
 class Woodchuck::Agent
 
-  attr_accessor :logger, :watcher, :watcher_thread, :paths, :output
+  attr_accessor :logger, :watcher, :watcher_thread, :paths, :output, :type
 
   def initialize(options={})
     @paths = options[:paths]
     @logger = Woodchuck::Logger.new(::STDOUT)
     @mutex = Mutex.new
+    @type = options[:type] || 'file'
     @output = case options[:output]
                  when :stdout 
                    Woodchuck::Output::STDOUT.new
@@ -22,7 +23,7 @@ class Woodchuck::Agent
                  else
                    Woodchuck::Output::STDOUT.new
                  end
-    @watcher = Woodchuck::Watcher.new(self, @paths)
+    @watcher = Woodchuck::Watcher.new(self, @paths, @type)
   end
 
   def start(blocking=false)

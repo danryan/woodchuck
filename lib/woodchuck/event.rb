@@ -2,7 +2,7 @@ require 'woodchuck/logger'
 
 class Woodchuck::Event
   
-  attr_accessor :source_path, :source_host, :timestamp, :source, :message, :fields, :tags
+  attr_accessor :source_path, :source_host, :timestamp, :source, :message, :fields, :tags, :type
   
   def initialize(init_hsh)
     @source_path = init_hsh["@source_path"] || init_hsh[:source_path]
@@ -26,7 +26,7 @@ class Woodchuck::Event
   def to_hash
     {
       '@source' => source.to_s,
-      '@type' => source.scheme,
+      '@type' => type,
       '@tags' => tags,
       '@fields' => fields,
       '@timestamp' => timestamp,

@@ -12,6 +12,7 @@ class Woodchuck::Event
     @message = init_hsh["@message"] || init_hsh[:message]
     @fields = init_hsh["@fields"] || init_hsh[:fields]
     @tags = init_hsh["@tags"] || init_hsh[:tags]
+		@type = init_hsh["@type"] || init_hsh[:type]
   end
   
   def method_missing(symbol, *args, &block)

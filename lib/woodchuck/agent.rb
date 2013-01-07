@@ -3,10 +3,13 @@ require 'socket'
 require 'thread'
 
 require 'woodchuck/output'
+require 'woodchuck/input'
+require 'woodchuck/input/plain'
+require 'woodchuck/input/json_event'
 
 class Woodchuck::Agent
 
-  attr_accessor :logger, :watcher, :watcher_thread, :paths, :output
+  attr_accessor :logger, :watcher, :watcher_thread, :paths, :output, :input_format
 
   def initialize(options={})
     @paths = options[:paths]
@@ -22,7 +25,14 @@ class Woodchuck::Agent
                  else
                    Woodchuck::Output::STDOUT.new
                  end
-    @watcher = Woodchuck::Watcher.new(self, @paths)
+		@input_format = case options[:input_format]
+			when :json_event
+				Woodchuck::Input::JsonEvent.new
+			else
+				Woodchuck::Input::Plain.new
+			end
+
+    @watcher = Woodchuck::Watcher.new(self, @input_format, @paths)
   end
 
   def start(blocking=false)

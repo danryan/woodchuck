@@ -9,14 +9,15 @@ require 'forwardable'
 class Woodchuck::Watcher
   extend Forwardable
   
-  attr_accessor :tailer, :paths, :logger, :events, :agent
+  attr_accessor :tailer, :paths, :logger, :events, :agent, :input_format
   def_delegator :@agent, :output, :output
   
-  def initialize(agent, *paths)
+  def initialize(agent, input_format, *paths)
     @agent = agent
     @logger = Woodchuck::Logger.new(::STDOUT)
     @tailer = FileWatch::Tail.new
-    @paths = paths.flatten
+    @paths = paths.flatten.compact
+		@input_format = input_format
   end
 
   def start
@@ -24,7 +25,7 @@ class Woodchuck::Watcher
       tailer.tail(path)
     end
     tailer.subscribe do |path, line|
-      event = Woodchuck::Event.new(path, line)
+      event = @input_format.create(path, line)
       output.handle(event)
     end
   end

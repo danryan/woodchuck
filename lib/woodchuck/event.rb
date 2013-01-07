@@ -2,17 +2,16 @@ require 'woodchuck/logger'
 
 class Woodchuck::Event
   
-  attr_accessor :path, :line, :host, :timestamp, :source, :message, :fields, :tags
+  attr_accessor :source_path, :source_host, :timestamp, :source, :message, :fields, :tags
   
-  def initialize(path, line)
-    @path = path
-    @line = line
-    @host = Socket.gethostname
-    @timestamp = Time.now.utc.iso8601(6)
-    @source = Addressable::URI.new(:scheme => 'file', :host => host, :path => path)
-    @message = line.strip
-    @fields = {}
-    @tags = []
+  def initialize(init_hsh)
+    @source_path = init_hsh["@source_path"] || init_hsh[:source_path]
+    @source_host = init_hsh["@source_host"] || init_hsh[:source_host]
+    @timestamp = init_hsh["@timestamp"] || init_hsh[:timestamp]
+    @source = init_hsh["@source"] || init_hsh[:source]
+    @message = init_hsh["@message"] || init_hsh[:message]
+    @fields = init_hsh["@fields"] || init_hsh[:fields]
+    @tags = init_hsh["@tags"] || init_hsh[:tags]
   end
   
   def method_missing(symbol, *args, &block)
@@ -30,8 +29,8 @@ class Woodchuck::Event
       '@tags' => tags,
       '@fields' => fields,
       '@timestamp' => timestamp,
-      '@source_host' => host,
-      '@source_path' => path,
+      '@source_host' => source_host,
+      '@source_path' => source_path,
       '@message' => message
     }
   end

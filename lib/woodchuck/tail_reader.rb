@@ -11,7 +11,6 @@ class Woodchuck::TailReader < EventMachine::FileTail
 
 	def initialize(path, startpos = -1)
 		super(path, startpos)
-		puts "Tailing #{path}"
 		@input_format = @@input_format
 		@output = @@output
 
@@ -19,10 +18,7 @@ class Woodchuck::TailReader < EventMachine::FileTail
 	end
 
 	def receive_data(data)
-		puts "Receive data" 
 		@buffer.extract(data).each do |line|
-			puts "#{path}: #{line}, output: #{output}, input_format: #{input_format}"
-
 			@output.handle(@input_format.create(path, line))
 		end
 	end

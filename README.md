@@ -25,6 +25,7 @@ woodchuck --files /var/log/syslog,/var/log/apache/**/*,/var/log/nginx/*.log --ou
 * -l, --log-level - Log verbosity. [ debug, warn, info, error, fatal ]
 * -p, --paths     - A comma-separated list of files to watch for changes (file globbing is accepted).
 * -o, --output    - The output to send to [ stdout, redis ]
+* -f, --format    - Input line format
 ```
 ## Coming soon
 

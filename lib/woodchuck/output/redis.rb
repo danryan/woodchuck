@@ -18,6 +18,6 @@ class Woodchuck::Output::Redis < Woodchuck::Output
   
   def handle(event)
     redis.lpush("events", event.to_json)
-    @logger.info "Logging event to Redis", event.to_hash
+    #@logger.info "Logging event to Redis", event.to_hash
   end
 end

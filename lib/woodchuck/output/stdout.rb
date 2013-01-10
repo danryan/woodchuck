@@ -1,8 +1,8 @@
 require 'woodchuck/output'
 
 class Woodchuck::Output::STDOUT < Woodchuck::Output
-  def initialize
-    super
+  def initialize(log_level)
+    super(log_level)
     @type = :stdout
   end
   

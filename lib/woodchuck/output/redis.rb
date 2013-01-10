@@ -4,8 +4,8 @@ require 'redis/namespace'
 class Woodchuck::Output::Redis < Woodchuck::Output
   attr_accessor :url, :host, :port, :db, :namespace
   
-  def initialize
-    super
+  def initialize(log_level)
+    super(log_level)
     @type = :redis
     @url = Addressable::URI.parse(ENV['REDIS_URL'] || 'redis://localhost:6379/9')
     @namespace = ENV['REDIS_NAMESPACE'] || 'logstash:woodchuck'
@@ -18,6 +18,6 @@ class Woodchuck::Output::Redis < Woodchuck::Output
   
   def handle(event)
     redis.lpush("events", event.to_json)
-    #@logger.info "Logging event to Redis", event.to_hash
+    @logger.info "Logging event to Redis", event.to_hash
   end
 end

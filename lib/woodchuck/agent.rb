@@ -13,17 +13,17 @@ class Woodchuck::Agent
 
   def initialize(options={})
     @paths = options[:paths]
+		options[:log_level] ||= :info
     @logger = Woodchuck::Logger.new(::STDOUT)
+		@logger.level = options[:log_level]
     @mutex = Mutex.new
     @output = case options[:output]
-                 when :stdout 
-                   Woodchuck::Output::STDOUT.new
                  when :zeromq
-                   Woodchuck::Output::ZeroMQ.new
+                   Woodchuck::Output::ZeroMQ.new(options[:log_level])
                  when :redis
-                   Woodchuck::Output::Redis.new
+                   Woodchuck::Output::Redis.new(options[:log_level])
                  else
-                   Woodchuck::Output::STDOUT.new
+                   Woodchuck::Output::STDOUT.new(options[:log_level])
                  end
 		@input_format = case options[:input_format]
 			when :json_event
@@ -32,7 +32,7 @@ class Woodchuck::Agent
 				Woodchuck::Input::Plain.new
 			end
 
-    @watcher = Woodchuck::Watcher.new(self, @input_format, @paths)
+    @watcher = Woodchuck::Watcher.new(self, options[:log_level], @input_format, @paths)
   end
 
   def start(blocking=false)

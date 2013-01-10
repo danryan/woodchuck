@@ -1,4 +1,4 @@
-require 'filewatch/tail'
+require "filewatch/tail"
 require 'addressable/uri'
 require 'yajl'
 require 'socket'
@@ -12,9 +12,10 @@ class Woodchuck::Watcher
   attr_accessor :tailer, :paths, :logger, :events, :agent, :input_format
   def_delegator :@agent, :output, :output
   
-  def initialize(agent, input_format, *paths)
+  def initialize(agent, log_level, input_format, *paths)
     @agent = agent
     @logger = Woodchuck::Logger.new(::STDOUT)
+		@logger.level = log_level unless log_level.nil?
     @tailer = FileWatch::Tail.new
     @paths = paths.flatten.compact
 		@input_format = input_format

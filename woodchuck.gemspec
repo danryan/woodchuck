@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   
   # gem.add_dependency 'listen', '~> 0.5.0'
-  gem.add_dependency 'filewatch', '~> 0.3.4'
+  gem.add_dependency 'eventmachine-tail', '~> 0.6.3'
   gem.add_dependency 'yajl-ruby', '~> 1.1.0'
   gem.add_dependency 'cabin', '~> 0.4.4'
   gem.add_dependency 'addressable', '~> 2.3.2'

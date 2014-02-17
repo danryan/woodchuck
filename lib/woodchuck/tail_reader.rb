@@ -18,7 +18,7 @@ class Woodchuck::TailReader < EventMachine::FileTail
 	end
 
 	def receive_data(data)
-		@buffer.extract(data).each do |line|
+		@buffer.extract(data.force_encoding('utf-8')).each do |line|
 			@output.handle(@input_format.create(path, line))
 		end
 	end

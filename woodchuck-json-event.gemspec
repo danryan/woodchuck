@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'woodchuck/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "woodchuck"
+  gem.name          = "woodchuck-json-event"
   gem.version       = Woodchuck::VERSION
   gem.platform    = Gem::Platform::RUBY
-  gem.authors       = ["Dan Ryan"]
-  gem.email         = ["dan@appliedawesome.com"]
+  gem.authors       = ["Dan Ryan", "David Pech"]
+  gem.email         = ["dan@appliedawesome.com", "davidpechcz@gmail.com"]
   # gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{lightweight log shipper for logstash}
-  gem.homepage      = "https://github.com/danryan/woodchuck"
+  gem.summary       = %q{lightweight log shipper for logstash with enhanced input options}
+  gem.homepage      = "https://github.com/pechdavid/woodchuck"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

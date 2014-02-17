@@ -26,13 +26,16 @@ module Woodchuck::Runner
       opts.on('-p', '--paths [PATHS]', Array, 'A list of file paths to watch') do |paths|
         options[:paths] = paths
       end
+      opts.on('-f', '--format [FORMAT]', [:plain, :json_event], 'Input line format') do |input_format|
+        options[:input_format] = input_format
+      end
     end
     optparse.parse!(args)
     options
   end
   
   def run(options={})
-    puts options.inspect
+    #puts options.inspect
     agent = Woodchuck::Agent.new(options)
     agent.start(true)
     Signal.trap('INT') do
